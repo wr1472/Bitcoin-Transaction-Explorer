@@ -1,0 +1,29 @@
+README: Bitcoin Transaction Explorer
+==============================================================
+
+This is an application built on top of the Java Play Framework
+(http://www.playframework.org/documentation/1.2.2/home).
+
+Bitcoin Transaction Explorer queries information from 
+http://blockexplorer.com and present it in a graphical manner
+where transactions are "first class citizens". This allows you
+to track the input of a transaction all the way 
+back to the transaction that generated the bitcoins. The main
+aim is to be able to track the flow of coins from generation to
+current status.
+
+This application will be hosted at http://btc.xqoob.com soon.
+
+Disclaimer: This application provides no guarantees as to its
+accuracy, and makes no claims on whether it is fit-for-purpose
+or not. It is purely experimental. Use at your own risk, and
+verify all information directly at http://blockexplorer.com 
+before acting upon it.
+
+Version 0.1
+==============================================================
+* Makes calls to blockexplorer to bring back all input and 
+output transactions.
+* Does not persist any information locally.
+* Ability to click on a transaction to load its inputs and 
+outputs.
