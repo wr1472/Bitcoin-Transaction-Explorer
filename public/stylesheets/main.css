@@ -11,6 +11,7 @@ div.transaction {
 div.universe{
 	/*width: 1000px;
 	overflow-x:hidden;*/
+	cursor: move;
 }
 
 body{

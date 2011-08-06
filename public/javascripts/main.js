@@ -31,6 +31,8 @@ function createCanvas(element, height){
 	else
 		canvas.setSize("100%", height);
 	
+	new RaphaelZPD(canvas, { zoom: true, pan: true, drag: false });
+	
 	return canvas;
 }
 
