@@ -1,6 +1,5 @@
 README: Bitcoin Transaction Explorer
 ==============================================================
-
 This is an application built on top of the Java Play Framework
 (http://www.playframework.org/documentation/1.2.2/home).
 

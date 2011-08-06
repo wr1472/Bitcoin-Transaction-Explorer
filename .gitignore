@@ -1,0 +1,6 @@
+*.[oa]
+/eclipse
+/test-result
+/tmp
+.classpath
+.project
