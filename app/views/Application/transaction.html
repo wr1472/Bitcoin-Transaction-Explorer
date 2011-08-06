@@ -3,7 +3,7 @@
 
 #{if tx}
 	<div class="transaction">
-		Transaction ID: <span id="txID" title="${tx.hash}">${tx.hash}</span>
+		<span id="txID" title="${tx.hash}">${tx.hash}</span>
 	</div>
 #{/if}
 	
@@ -12,20 +12,14 @@
 #{if tx}	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			tx = new Transaction("${tx.hash}", "${tx.credit}", getCanvas("holder"));
-			tx.x = 500, tx.y = 300;
-			tx.init();
+			getObjectTransaction("${tx.hash}","${tx.credit}");
 		});
 	</script>
 	
 	#{list items:tx.inputs, as:'input'}
 		<script type="text/javascript">
 			$(document).ready(function(){
-				itx = new Transaction("${input.previousTransaction.hash}", null, getCanvas("holder"));
-				itx.x = 300, itx.y = (inputCounter++) * 120;
-				itx.init();
-				connections.push(getCanvas("holder").connection(
-						tx.getNode(), itx.getNode(), connectorLineColor, "#000", "${input.scriptSig}"));
+				getInputTx("${input.previousTransaction.hash}", "${input.scriptSig}");
 			});
 		</script>
 	#{/list}

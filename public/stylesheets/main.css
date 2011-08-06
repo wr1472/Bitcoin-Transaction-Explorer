@@ -1,19 +1,22 @@
 div.transaction {
 	border-style: solid;
 	border-width: 1px;
-	padding: 5px;
+	padding: 8px;
 	color: #456;
 	font-family: helvetica;
 	font-weight: bold;
+	background-color: #ABC;
 }
 
 div.universe{
-	/*border-style: solid;
-	border-width: 1px;*/
-	width: 1000px;
-	/*overflow-x:hidden;*/
+	/*width: 1000px;
+	overflow-x:hidden;*/
 }
 
 body{
+	border-style: solid;
+	border-width: 3px;
+	border-color: #456;
 	background-color: #CCCCCC;
+	background-image: url('/public/images/16x16_red.gif');
 }

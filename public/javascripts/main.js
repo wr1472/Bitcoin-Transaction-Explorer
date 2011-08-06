@@ -20,13 +20,27 @@ var connectorFillColor = "#ABC";
 function getCanvas(element){
 	
 	if(canvas == undefined || canvas == null){
-		canvas = Raphael(element, 1000, 5000);
+		canvas = Raphael(element, 1000, 600);
 		inputcounter = 1;
 		
 		log("Created canvas.");
 	}
 	
 	return canvas;
+}
+
+function getObjectTransaction(hash, credit){
+	tx = new Transaction(hash, credit, getCanvas("holder"));
+	tx.x = 500, tx.y = 300;
+	tx.init();
+}
+
+function getInputTx(hash, scriptSig){
+	itx = new Transaction(hash, null, getCanvas("holder"));
+	itx.x = 300, itx.y = (inputCounter++) * 120;
+	itx.init();
+	connections.push(getCanvas("holder").connection(
+			tx.getNode(), itx.getNode(), connectorLineColor, "#000", scriptSig));
 }
 
 function getOutputTx(scriptSigPublicKey){
