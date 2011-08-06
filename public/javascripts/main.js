@@ -8,6 +8,9 @@ function log(stmt){
 }
 
 var GENESIS_TX = '0000000000000000000000000000000000000000000000000000000000000000';
+var CANVAS_RESIZE_CONST = 160;
+var NODE_SPACING_CONST = 120;
+
 var canvas;
 var tx;
 var connections = [];
@@ -17,27 +20,47 @@ var outputCounter = 1;
 var connectorLineColor = "#456";
 var connectorFillColor = "#ABC";
 
-function getCanvas(element){
+function createCanvas(element, height){
 	
 	if(canvas == undefined || canvas == null){
-		canvas = Raphael(element, 1000, 600);
+		canvas = Raphael(element, "100%", height);
 		inputcounter = 1;
 		
 		log("Created canvas.");
 	}
+	else
+		canvas.setSize("100%", height);
 	
 	return canvas;
 }
 
-function getObjectTransaction(hash, credit){
-	tx = new Transaction(hash, credit, getCanvas("holder"));
+function getCanvas(){
+	return canvas;
+}
+
+function getObjectTransaction(hash, credit, inputSize){
+	initialCanvasHeight = 600;
+	
+	// Dynamically resize canvas if we're going to go over initial size.
+	if(inputSize > 4){
+		log("Resizing canvas for inputs: " + inputSize);
+		initialCanvasHeight = inputSize * CANVAS_RESIZE_CONST;
+	}
+	
+	
+	tx = new Transaction(hash, credit, createCanvas("holder", initialCanvasHeight));
 	tx.x = 500, tx.y = 300;
 	tx.init();
+	
+	log("Canvas height for inputs: " + getCanvas().height);
 }
 
 function getInputTx(hash, scriptSig){
-	itx = new Transaction(hash, null, getCanvas("holder"));
-	itx.x = 300, itx.y = (inputCounter++) * 120;
+	//var height = $("holder").style.height;
+	//log("Canvas height: " + height);
+	
+	itx = new Transaction(hash, null, getCanvas());
+	itx.x = 300, itx.y = (inputCounter++) * NODE_SPACING_CONST;
 	itx.init();
 	connections.push(getCanvas("holder").connection(
 			tx.getNode(), itx.getNode(), connectorLineColor, "#000", scriptSig));
@@ -54,11 +77,20 @@ function getOutputTx(scriptSigPublicKey){
 			dataType: "json",
 			async: false,
 			success: function(transactions) {
+
+				var resize = transactions.length * CANVAS_RESIZE_CONST;
+				
+				// Dynamically resize canvas if we're going to go over current size.
+				if(resize > getCanvas().height){
+					getCanvas().setSize("100%", resize);
+				}
+				log("Canvas height for outputs: " + getCanvas().height);
+			
 				for(var i = 0; i < transactions.length; i++){
 					transaction = transactions[i];
-					log("tx: " + transaction.out.length);
-					otx = new Transaction(transaction.hash, transaction.credit, getCanvas("holder"));
-					otx.x = 700, otx.y = (outputCounter++) * 120;
+										
+					otx = new Transaction(transaction.hash, transaction.credit, getCanvas());
+					otx.x = 700, otx.y = (outputCounter++) * NODE_SPACING_CONST;
 					otx.init();
 					connections.push(getCanvas("holder").connection(
 							otx.getNode(), tx.getNode(), connectorLineColor, "#000", scriptSigPublicKey));
@@ -107,8 +139,8 @@ function Transaction(txID, credit, r){
 	}
 	
 	this.createNode = function(){
-		log("x: " + this.x);
-		log("y: " + this.y);
+		//log("x: " + this.x);
+		//log("y: " + this.y);
 			
 		this.node = r.ellipse(this.x,this.y, radius, radius);
 			    

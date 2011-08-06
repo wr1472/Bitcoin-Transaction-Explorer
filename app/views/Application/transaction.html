@@ -12,7 +12,7 @@
 #{if tx}	
 	<script type="text/javascript">
 		$(document).ready(function(){
-			getObjectTransaction("${tx.hash}","${tx.credit}");
+			getObjectTransaction("${tx.hash}","${tx.credit}", "${tx.inputs.size}");
 		});
 	</script>
 	
