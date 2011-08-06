@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<form name="searchForm">
+	<label id="searchTxLabel" for="searchTx">Enter Bitcoin Transaction ID</label>
+	<input type="text" id="searchTx" />
+	<input type="button" value="Search" onClick="doSearch();" /> 
+</form>
+
+<a href="search/ee4637bdff8824e74936a3f1683a65c19d34cf19e9b20021fca45d50dfe633cf">link</a>
+<a href="test/q">test link</a>
+
+<script type="text/javascript">
+	function doSearch(){
+		window.location = "search/" + $(searchTx).val();
+	}
+</script>

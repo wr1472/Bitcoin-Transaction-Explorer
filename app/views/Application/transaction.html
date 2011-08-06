@@ -1,0 +1,59 @@
+#{extends 'main.html' /}
+#{set title:'BTC Transaction Explorer' /}
+
+<div id="holder" class="universe"></div> 
+	
+#{if tx}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			tx = new Transaction("${tx.hash}", "${tx.credit}", getCanvas("holder"));
+			tx.x = 500, tx.y = 300;
+			tx.init();
+		});
+	</script>
+	
+		Inputs: <br/>
+		#{list items:tx.inputs, as:'input'}
+			<div class="transaction">
+				${input.previousTransaction.hash} <br/>
+				${input.previousTransaction.n} <br/>
+			</div>
+			
+			<script type="text/javascript">
+				$(document).ready(function(){
+					itx = new Transaction("${input.previousTransaction.hash}", null, getCanvas("holder"));
+					itx.x = 300, itx.y = (inputCounter++) * 120;
+					itx.init();
+					connections.push(getCanvas("holder").connection(
+							tx.getNode(), itx.getNode(), connectorLineColor, "#000", "${input.scriptSig}"));
+				});
+			</script>
+		#{/list}
+	
+	
+	<div class="transaction">
+		Transaction ID: <span id="txID" title="${tx.hash}">unspecified</span>
+		<script type="text/javascript">
+			$('#txID').text(truncateTransactionId("${tx.hash}"));
+		</script>
+		<br/>
+		Credit: ${tx.credit} <br/>
+	</div>
+		
+	Outputs: <br/>
+	#{list items:tx.outputs, as:'output'}
+		<div class="transaction">
+			${output.amount} <br/>
+			${output.scriptPublicKey} <br/>
+			
+			<script type="text/javascript">
+				getOutputTx("${output.scriptPublicKey}");
+			</script>
+		</div>
+	#{/list}
+				
+	
+#{/if}
+#{else}
+    No transaction found.
+#{/else}

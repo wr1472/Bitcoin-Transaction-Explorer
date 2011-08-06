@@ -1,0 +1,12 @@
+div.transaction {
+	border-style: solid;
+	border-width: 1px;
+	width: 200px;
+}
+
+div.universe{
+	/*border-style: solid;
+	border-width: 1px;*/
+	width: 1000px;
+	/*overflow-x:hidden;*/
+}
