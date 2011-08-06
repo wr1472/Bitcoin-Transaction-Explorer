@@ -8,15 +8,12 @@ import models.Output;
 import models.Transaction;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import play.test.FunctionalTest;
 
 import com.xqoob.bitcoin.blockexplorer.BlockExplorerFacade;
 import com.xqoob.bitcoin.blockexplorer.TransactionExplorerException;
 
-@RunWith(JUnit4.class)
 public class BlockExplorerFacadeTest extends FunctionalTest {
 
 	private static final String [] VALID_HASHES = {

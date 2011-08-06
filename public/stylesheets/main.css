@@ -1,7 +1,10 @@
 div.transaction {
 	border-style: solid;
 	border-width: 1px;
-	width: 200px;
+	padding: 5px;
+	color: #456;
+	font-family: helvetica;
+	font-weight: bold;
 }
 
 div.universe{
@@ -9,4 +12,8 @@ div.universe{
 	border-width: 1px;*/
 	width: 1000px;
 	/*overflow-x:hidden;*/
+}
+
+body{
+	background-color: #CCCCCC;
 }

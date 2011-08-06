@@ -81,7 +81,8 @@ function Transaction(txID, credit, r){
 		for (var i = 0, ii = this.set.length; i < ii; i++) {
 			if(txID != GENESIS_TX) {
 				this.set[i].attr({
-					cursor: "pointer"		    
+					cursor: "pointer"
+					,title : txID		    
 				});
 				
 				$(this.set[i].node).click(function (event) {
@@ -101,8 +102,7 @@ function Transaction(txID, credit, r){
 			fill: connectorFillColor
             ,"fill-opacity": 1
 			,stroke: connectorLineColor
-			,"stroke-width": 3
-			,title : txID
+			,"stroke-width": 5
 		});
 				
 		
@@ -122,6 +122,12 @@ function Transaction(txID, credit, r){
 			credit = Math.round(credit * 10000000) / 10000000;
 			this.text = r.text(this.x,this.y, truncateTransactionId(txID) + "\nBTC " + credit);
 		}
+		
+		this.text.attr({
+			fill: "#AD0303"
+			,"font-size": 11
+			,"font-family": "helvetica"
+		});
 		
 		return this.text;
 	}
