@@ -8,7 +8,7 @@ GET     /                                       Application.index
 # Search Result page
 GET     /search/{transactionId}		            Application.search
 GET     /transaction/{hash}            			Application.transaction
-GET     /output/{scriptSigPubKey}	            Application.outputTransaction
+GET     /output/{scriptSigPubKey}/{hash}        Application.outputTransaction
 GET     /address/{key}				            Application.address
 
 # Ignore favicon requests

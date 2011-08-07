@@ -2,10 +2,12 @@ package com.xqoob.bitcoin.blockexplorer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import models.Input;
 import models.Output;
 import models.Transaction;
 import play.Logger;
@@ -112,30 +114,54 @@ public class BlockExplorerFacade {
 		return transactions;
 	}
 
-	public Collection<Transaction> getOutputTransactions(String address) throws TransactionExplorerException {
-		Collection<Transaction> filteredTXs = new LinkedList<Transaction>();
+	public Collection<Transaction> getOutputTransactions(String address, String inputTransaction) throws TransactionExplorerException {
+		Logger.info("Getting output transactions for transaction: " + inputTransaction);
+		Collection<Transaction> filteredTXs = new HashSet<Transaction>();
+		boolean flag = false;
 		
 		// Get all transactions associated with address
 		Collection<Transaction> transactions = getTransactions(address);
 		
 		// For each transaction in address.
-		for(Transaction tx : transactions){
+		for(Transaction tx : transactions){	
+			flag = false;
 			// TODO: Unless this method is called explicitly will not 
 			// set attribute in Transaction instance. Therefore will 
 			// not be available when serialised as json object.
 			tx.getCredit();
 			
-			// Check if out address matches this address.
-			for(Output output : tx.getOutputs()){					
-				if(output.getAddress().equals(address)){
-					Logger.info("Found input transaction: " + tx.getHash());
+//			// Check if any of the out addresses matches this destination.
+//			for(Output output : tx.getOutputs()){					
+//				if(output.getToAddress().equals(address)){
+//					// Then it's an input transaction of this address - we're not interested.
+//					Logger.info("Found input transaction: " + tx.getHash());
+//					filteredTXs.add(tx);
+//					break;
+//				}
+//			}
+//		}
+//		
+//		// Get rid of all input transactions for this address.
+//		transactions.removeAll(filteredTXs);
+//		filteredTXs.clear();
+//		
+//		for(Transaction tx : transactions){
+			// Double check that the inputs have this address as their departure.
+			for(Input input : tx.getInputs()){
+				// Transaction is not an output from this address
+				if(input.getHash().equals(inputTransaction)){
+					Logger.info("Found output transaction belonging to this transaction: " + tx.getHash());
+					flag = true;
+				}
+				
+				if(flag){
 					filteredTXs.add(tx);
+					break;
 				}
 			}
 		}
-		
-		// Get rid of output transactions not having current transaction as input.
-		transactions.removeAll(filteredTXs);		
+
+		transactions.retainAll(filteredTXs);		
 		Logger.info("Number of output transactions: " + transactions.size());
 		
 		return transactions;

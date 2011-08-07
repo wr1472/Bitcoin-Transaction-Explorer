@@ -9,7 +9,7 @@ public class TransactionTest extends UnitTest {
     public void shouldReturnTransactionIdItIsCreatedWith() {
 		String txId = "1234567890";
         Transaction tx = new Transaction(txId);
-		assertEquals(txId, tx.hash);
+		assertEquals(txId, tx.getHash());
     }
 
 }

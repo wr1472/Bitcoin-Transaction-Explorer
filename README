@@ -19,10 +19,14 @@ or not. It is purely experimental. Use at your own risk, and
 verify all information directly at http://blockexplorer.com 
 before acting upon it.
 
-Version 0.1
+Version 0.1.0
 ==============================================================
 * Makes calls to blockexplorer to bring back all input and 
 output transactions.
 * Does not persist any information locally.
 * Ability to click on a transaction to load its inputs and 
 outputs.
+
+Version 0.1.1
+==============================================================
+* Ability to pan and zoom. 

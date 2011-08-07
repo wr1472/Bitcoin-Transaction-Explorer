@@ -19,6 +19,7 @@ var outputCounter = 1;
 
 var connectorLineColor = "#456";
 var connectorFillColor = "#ABC";
+var zpd;
 
 function createCanvas(element, height){
 	
@@ -31,7 +32,7 @@ function createCanvas(element, height){
 	else
 		canvas.setSize("100%", height);
 	
-	new RaphaelZPD(canvas, { zoom: true, pan: true, drag: false });
+	zpd = new RaphaelZPD(canvas, { zoom: true, pan: true, drag: false });
 	
 	return canvas;
 }
@@ -68,13 +69,13 @@ function getInputTx(hash, scriptSig){
 			tx.getNode(), itx.getNode(), connectorLineColor, "#000", scriptSig));
 }
 
-function getOutputTx(scriptSigPublicKey){
+function getOutputTx(scriptSigPublicKey, inputTX){
 	$(document).ready(function(){
 		log("Getting output transactions for: " + scriptSigPublicKey);
 	
 		$.ajax({
 			type: "GET",
-			url: "/output/" + scriptSigPublicKey, 
+			url: "/output/" + scriptSigPublicKey + "/" + inputTX, 
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			async: false,
@@ -86,6 +87,7 @@ function getOutputTx(scriptSigPublicKey){
 				if(resize > getCanvas().height){
 					getCanvas().setSize("100%", resize);
 				}
+				
 				log("Canvas height for outputs: " + getCanvas().height);
 			
 				for(var i = 0; i < transactions.length; i++){
@@ -112,6 +114,7 @@ function getOutputTx(scriptSigPublicKey){
 function getTransaction(txID){
 	log("Getting transaction: " + txID);
 	window.location = "/transaction/" + txID;
+	getCanvas().clear();
 }
 
 function Transaction(txID, credit, r){

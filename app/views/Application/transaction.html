@@ -4,6 +4,17 @@
 #{if tx}
 	<div class="transaction">
 		<span id="txID" title="${tx.hash}">${tx.hash}</span>
+		
+		<sup>
+			<a href="http://blockexplorer.com/tx/${tx.hash}" class="ref_link"
+				title="Verify this transaction at blockexplorer.com">
+				(Verify)
+			</a>
+		</sup>
+	</div>
+	
+	<div class="browsing_history">
+		<span id="browsingHistory"></span>
 	</div>
 #{/if}
 	
@@ -26,11 +37,15 @@
 			
 	#{list items:tx.outputs, as:'output'}
 		<script type="text/javascript">
-			getOutputTx("${output.scriptPublicKey}");
+			getOutputTx("${output.scriptPublicKey}", "${tx.hash}");
 		</script>
 	#{/list}
 				
-	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#browsingHistory").text(truncateTransactionId("${tx.hash}"));
+		});
+	</script>
 #{/if}
 #{else}
     No transaction found.

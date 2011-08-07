@@ -47,7 +47,8 @@ public class BlockExplorerFacadeTest extends FunctionalTest {
 		,"c45f3990204c9bd666de19c50a8ebd0c7487aceeee62573e8f96a8f71d0643a0"
 	};
 	
-	// Valid for 1BU5hgygVqXWKbK7qKpbmbR5jKykn2wXvL
+	// Valid for address 1BU5hgygVqXWKbK7qKpbmbR5jKykn2wXvL
+	// and input transaction ee4637bdff8824e74936a3f1683a65c19d34cf19e9b20021fca45d50dfe633cf
 	private static final String [] VALID_OUTPUT_TRANSACTIONS = {
 		"c45f3990204c9bd666de19c50a8ebd0c7487aceeee62573e8f96a8f71d0643a0"
 	};
@@ -100,7 +101,7 @@ public class BlockExplorerFacadeTest extends FunctionalTest {
 		
 		for(Input input : inputs)
 			Assert.assertTrue(Arrays.asList(
-				VALID_INPUTS).contains(input.getPreviousTransaction().getHash()));
+				VALID_INPUTS).contains(input.getHash()));
 	}
 	
 	@Test
@@ -153,7 +154,8 @@ public class BlockExplorerFacadeTest extends FunctionalTest {
 	
 	@Test
 	public void shouldReturnOnlyOutputTransactionsForValidAddress() throws TransactionExplorerException{
-		Collection<Transaction> outputTransactions = facade.getOutputTransactions(VALID_ADDRESSES[0]);
+		Collection<Transaction> outputTransactions = 
+			facade.getOutputTransactions(VALID_ADDRESSES[0],VALID_TRANSACTIONS[0]);
 
 		for(Transaction tx : outputTransactions)
 			Assert.assertTrue(Arrays.asList(
@@ -162,7 +164,8 @@ public class BlockExplorerFacadeTest extends FunctionalTest {
 
 	@Test
 	public void shouldHaveCorrectCreditForOutputTransaction() throws TransactionExplorerException{
-		List<Transaction> outputTransactions = (List<Transaction>) facade.getOutputTransactions(VALID_ADDRESSES[0]);
+		List<Transaction> outputTransactions = 
+			(List<Transaction>) facade.getOutputTransactions(VALID_ADDRESSES[0], VALID_TRANSACTIONS[0]);
 		Assert.assertTrue(VALID_OUTPUT_CREDIT[0] == outputTransactions.get(0).getCredit());
 	}
 	
@@ -187,3 +190,5 @@ public class BlockExplorerFacadeTest extends FunctionalTest {
 		Assert.assertNotNull(facade.getTransaction(GENERATIONAL_TRANSACTION));
 	}
 }
+
+// TODO: Need to look into whether the outputs for this tx are correct c501c1eeada1d702cb3264e8fe0312fc60b7f094bc5f4d9af3714e7ba7f01005  

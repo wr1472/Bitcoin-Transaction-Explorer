@@ -12,7 +12,7 @@ public class Output extends Model {
 	
 	@SerializedName("value") private double amount;	
 	@SerializedName("scriptPubKey") private String scriptPublicKey;	
-	@SerializedName("address") private String address;	
+	@SerializedName("address") private String toAddress;	
 	private transient Collection<Transaction> outputTransactions;
 	
 	public Output(){
@@ -40,8 +40,8 @@ public class Output extends Model {
 		outputTransactions.add(tx);
 	}
 	
-	public String getAddress() {
-		return address;
+	public String getToAddress() {
+		return toAddress;
 	}
 
 	public Collection<Transaction> getOutputTransactions(){

@@ -10,13 +10,12 @@ public class Transaction extends Model {
 
 	private static final long serialVersionUID = -4862526967785430696L;
 	
-	@SerializedName("hash") public String hash;	
-	@SerializedName("n") public int n;	
+	@SerializedName("hash") private String hash;	
 	
-	public double credit;
+	private double credit;
 	
-	@SerializedName("in") public Collection<Input> inputs;	
-	@SerializedName("out") public Collection<Output> outputs;
+	@SerializedName("in") private Collection<Input> inputs;		
+	@SerializedName("out") private Collection<Output> outputs;
 		
 	public Transaction(String hash){
 		this.hash = hash;
@@ -55,7 +54,7 @@ public class Transaction extends Model {
 	public Collection<Input> getInputs() {
 		return inputs;
 	}
-
+	
 	public String toString(){
 		return hash.toString();
 	}

@@ -7,10 +7,20 @@ div.transaction {
 	font-weight: bold;
 	background-color: #ABC;
 }
+div.browsing_history {
+	border-style: solid;
+	border-width: 1px;
+	padding: 3px;
+	color: #456;
+	font-family: helvetica;
+	font-weight: lighter;
+	font-size: 0.8em;
+	background-color: #ABC;
+}
 
 div.universe{
-	/*width: 1000px;
-	overflow-x:hidden;*/
+	/*width: 1000px;*/
+	overflow-y:hidden;
 	cursor: move;
 }
 
@@ -20,4 +30,8 @@ body{
 	border-color: #456;*/
 	background-color: #CCCCCC;
 	background-image: url('/public/images/16x16_red.gif');
+}
+
+.ref_link{
+	
 }

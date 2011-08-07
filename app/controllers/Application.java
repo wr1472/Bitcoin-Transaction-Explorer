@@ -35,12 +35,12 @@ public class Application extends Controller {
 		render(tx);
 	}
 		
-	public static void outputTransaction(String scriptSigPubKey){
+	public static void outputTransaction(String scriptSigPubKey, String hash){
 		Collection<Transaction> TXs = new LinkedList<Transaction>();
 		
 		try{
 			TXs = facade.getOutputTransactions(
-				facade.getAddress(scriptSigPubKey)); 
+				facade.getAddress(scriptSigPubKey), hash); 
 		}
 		catch (TransactionExplorerException e) {
 			 Logger.error(e.getMessage());
